@@ -1,0 +1,6 @@
+<h1>Weekly Assignment Report for {{ user.first_name }}</h1>
+<ul>
+{% for label, created, completed in chart_data %}
+    <li>{{ label }} - Created: {{ created }}, Completed: {{ completed }}</li>
+{% endfor %}
+</ul>

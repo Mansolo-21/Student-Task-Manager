@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Create Project{% endblock %}
+
+{% block content %}
+<div style="max-width:600px; margin:40px auto; padding:25px; border:1px solid #ddd; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+
+    <!-- Title -->
+    <h2 style="text-align:center; margin-bottom:20px;">Create New Project</h2>
+
+    <!-- Form -->
+    <form method="POST">
+        {% csrf_token %}
+
+        <div style="margin-bottom:15px;">
+            {{ form.as_p }}
+        </div>
+
+        <!-- Buttons -->
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px;">
+            
+            <!-- Back Button -->
+            <a href="{% url 'project_list' %}" 
+               style="text-decoration:none; padding:10px 15px; background:#6c757d; color:white; border-radius:6px;">
+                ← Back
+            </a>
+
+            <!-- Submit Button -->
+            <button type="submit" 
+                    style="padding:10px 20px; background:#28a745; color:white; border:none; border-radius:6px; font-weight:bold;">
+                Save Project
+            </button>
+
+        </div>
+    </form>
+
+</div>
+{% endblock %}

@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Home{% endblock %}
+{%block content%}
+
+                <!-- Begin Page Content -->
+ <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-end mb-4">
+                       <a href="{% url 'generate_report' %}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+    <i class="fas fa-download fa-sm text-white-50"></i> Generate Report
+</a>
+                    </div>
+
+                    
+                    <div class="container mt-5">
+    <div class="card shadow-lg p-4 border-0 rounded-4 mb-1">
+        
+        <h1 class="text-primary fw-bold mb-3">
+             Hello {{ user.first_name }}
+        </h1>
+
+        <p class="lead text-muted">
+             Welcome to the <strong>Student Task Management System</strong>!
+        </p>
+
+        <p class="text-secondary">
+            This system was designed to help students <strong>remember, organize, 
+            and efficiently manage their assignments</strong>. It allows you to track 
+            deadlines, stay on top of your tasks, and ensure that all assignments 
+            are completed on time.
+        </p>
+
+        <p class="text-secondary">
+            By using this tracker, students can reduce stress and confidently 
+            enjoy their free time knowing their academic responsibilities 
+            are well organized and under control.
+        </p>
+
+    </div>
+    <div class="card shadow-lg p-4 border-0 rounded-4">
+  <div style="width:100%; max-width:800px; margin:auto;">
+    <canvas id="assignmentChart" style="width:100%; height:400px;"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const labels = {{ labels|safe }};
+const createdData = {{ created_data|safe }};
+const completedData = {{ completed_data|safe }};
+
+// Safety check: make sure arrays exist and have values
+if(!labels.length || !createdData.length || !completedData.length){
+    console.error("No data to display!");
+} else {
+
+    // Calculate completion rate (%)
+    const completionRateData = createdData.map((c, i) => c === 0 ? 0 : ((completedData[i] / c) * 100).toFixed(1));
+
+    const ctx = document.getElementById('assignmentChart').getContext('2d');
+
+    // Gradients
+    const createdGradient = ctx.createLinearGradient(0, 0, 0, 400);
+    createdGradient.addColorStop(0, 'rgba(108, 117, 125, 0.8)');
+    createdGradient.addColorStop(1, 'rgba(108, 117, 125, 0.3)');
+
+    const completedGradient = ctx.createLinearGradient(0, 0, 0, 400);
+    completedGradient.addColorStop(0, 'rgba(40, 167, 69, 0.8)');
+    completedGradient.addColorStop(1, 'rgba(40, 167, 69, 0.3)');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Created',
+                    data: createdData,
+                    backgroundColor: createdGradient,
+                },
+                {
+                    label: 'Completed',
+                    data: completedData,
+                    backgroundColor: completedGradient,
+                },
+                {
+                    label: 'Completion Rate (%)',
+                    data: completionRateData,
+                    type: 'line',
+                    borderColor: '#ffc107',
+                    backgroundColor: '#ffc107',
+                    yAxisID: 'y1',
+                    tension: 0.3,
+                    fill: false,
+                    pointStyle: 'circle',
+                    pointRadius: 5
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Weekly Assignment Dashboard',
+                    font: { size: 18, weight: 'bold' }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            if(context.dataset.label === 'Completion Rate (%)'){
+                                return `${context.dataset.label}: ${context.parsed.y}%`;
+                            }
+                            const pending = context.dataset.label === 'Created' 
+                                ? context.parsed.y - completedData[context.dataIndex] 
+                                : 0;
+                            return `${context.dataset.label}: ${context.parsed.y}` + (pending ? ` (Pending: ${pending})` : '');
+                        }
+                    }
+                },
+                legend: { position: 'top' }
+            },
+            scales: {
+                x: { stacked: true },
+                y: {
+                    stacked: true,
+                    beginAtZero: true,
+                    title: { display: true, text: 'Number of Assignments' }
+                },
+                y1: {
+                    position: 'right',
+                    beginAtZero: true,
+                    max: 100,
+                    title: { display: true, text: 'Completion Rate (%)' },
+                    grid: { drawOnChartArea: false }
+                }
+            }
+        }
+    });
+}
+</script>
+    </div>
+</div>
+      
+            <!-- Footer -->
+{% endblock %}
