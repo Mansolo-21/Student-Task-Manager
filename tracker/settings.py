@@ -65,6 +65,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware', 
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'tracker.urls'
@@ -175,3 +176,12 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 # Google OAuth
 SOCIAL_AUTH_GOOGLE_CLIENT_ID = config('SOCIAL_AUTH_GOOGLE_CLIENT_ID')
 SOCIAL_AUTH_GOOGLE_CLIENT_SECRET = config('SOCIAL_AUTH_GOOGLE_CLIENT_SECRET')
+
+STATIC_URL = 'static/'
+
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATIC_ROOT = BASE_DIR / "staticfiles"
