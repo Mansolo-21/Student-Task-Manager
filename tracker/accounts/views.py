@@ -4,6 +4,13 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.http import HttpResponse
+
+def reset_admin_password(request):
+    user = User.objects.get(username='YOUR_USERNAME')  # change this
+    user.set_password('newpassword123')  # set new password
+    user.save()
+    return HttpResponse("Password reset successful")
 
 def register_view(request):
 
