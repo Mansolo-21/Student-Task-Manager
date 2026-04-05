@@ -17,16 +17,7 @@ def reset_admin_password(request):
     user.save()
     return HttpResponse("Password reset successful")
 
-def create_superuser(request):
-    if not User.objects.filter(username='admin').exists():
-        User.objects.create_superuser(
-            username='admin',
-            email='admin@gmail.com',
-            password='admin123'
-        )
-        return HttpResponse("Superuser created")
-    else:
-        return HttpResponse("Superuser already exists")
+
     
 def register_view(request):
 

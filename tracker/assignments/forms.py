@@ -10,17 +10,17 @@ class AssignmentForm(forms.ModelForm):
         widgets = {
             'subject': forms.TextInput(attrs={
                 'class': 'form-control mb-3',
-                'placeholder': '📚 Enter the subject name',
+                'placeholder': 'Enter the subject name',
                 'style': 'background-color: #e6f0ff; border: 1px solid #3399ff;'
             }),
             'title': forms.TextInput(attrs={
                 'class': 'form-control mb-3',
-                'placeholder': '📝 Enter the title',
+                'placeholder': 'Enter the title',
                 'style': 'background-color: #e6f0ff; border: 1px solid #3399ff;'
             }),
             'description': forms.Textarea(attrs={
                 'class': 'form-control mb-3',
-                'placeholder': '✏️ Enter the description',
+                'placeholder': 'Enter the description',
                 'rows': 4,
                 'style': 'background-color: #e6f0ff; border: 1px solid #3399ff;'
             }),

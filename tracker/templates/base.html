@@ -1,335 +1,219 @@
-{%load static%}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Student Task Manager</title>
 
-    <title>Homepage</title>
-
-    <!-- Custom fonts for this template-->
-    <link href="{%static 'vendor/fontawesome-free/css/all.min.css'%}" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
-
-    <!-- Custom styles for this template-->
-    <link href="{%static 'css/sb-admin-2.min.css'%}" rel="stylesheet">
+    <!-- Styles -->
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
 
 </head>
 
 <body id="page-top">
 
-    <!-- Page Wrapper -->
-    <div id="wrapper">
+<div id="wrapper">
 
-        <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <!-- SIDEBAR -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion d-none d-md-block" id="accordionSidebar">
 
-            <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'dashboard'%}">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
-                </div>
-                <div class="sidebar-brand-text mx-3">TRACKER<sup>2</sup></div>
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'dashboard' %}">
+            <div class="sidebar-brand-icon">
+                <i class="fas fa-tasks"></i>
+            </div>
+            <div class="sidebar-brand-text mx-3">Task Manager</div>
+        </a>
+
+        <hr class="sidebar-divider">
+
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'dashboard' %}">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
             </a>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
- <div class="sidebar-heading">
-                Home
-            </div>
-            <hr class="sidebar-divider my-0">
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link"  href="{% url 'home'%}">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Home</span></a>
-            </li>
-            <hr class="sidebar-divider my-0">
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link"  href="{% url 'dashboard'%}">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
-            </li>
-
-          
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Tasks
-            </div>
-            
-            <hr class="sidebar-divider my-0">
-
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link"  href="{% url 'add_assignment'%}">
-                    
-                    <span>Add Assignment</span></a>
-            </li>
-            <hr class="sidebar-divider my-0">
-
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link"  href="{% url 'assignment_list'%}">
-               
-                    <span>Assignment List</span></a>
-            </li>
-
-             <hr class="sidebar-divider my-0">
-
-            <!-- Nav Item - Dashboard -->
- <li class="nav-item active">
-    <a class="nav-link" href="{% url 'project_list' %}" 
-       style="display:flex; align-items:center; gap:10px;">
+        </li>
 
 
-        <span>Project List</span>
-    </a>
-</li>
-             <hr class="sidebar-divider my-0">
+        <hr class="sidebar-divider">
 
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link"  href="{% url 'completed_assignments'%}">
-                   
-                    <span>Completed Assignment List</span></a>
-            </li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'add_assignment' %}">Add Assignment</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'assignment_list' %}">Assignment List</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'create_project' %}">Add Project</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'project_list' %}">Project List</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'completed_assignments' %}">Completed Assignment</a></li>
 
-            <!-- Nav Item - Pages Collapse Menu -->
-            
+    </ul>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
+    <!-- CONTENT -->
+    <div id="content-wrapper" class="d-flex flex-column">
 
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
+        <div id="content">
 
-        </ul>
-        <!-- End of Sidebar -->
+            <!-- TOPBAR -->
+            <nav class="navbar navbar-expand navbar-light bg-white shadow px-3">
 
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
+                <!-- MOBILE MENU BUTTON -->
+                <button class="btn btn-primary d-md-none" id="menuToggle">☰</button>
 
-            <!-- Main Content -->
-            <div id="content">
+                <h5 class="mb-0 text-primary ml-2">Student Task Manager</h5>
 
-                <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-6 static-top shadow">
-                <!-- Topbar Navbar -->
-                 <h1 class="h3 mb-0 text-primary"><strong> Student Task Management System</strong></h1>
-                    <ul class="navbar-nav ml-auto">
-                     <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                        <li class="nav-item dropdown no-arrow d-sm-none">
-                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-search fa-fw"></i>
-                            </a>
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                aria-labelledby="searchDropdown">
-                                <form class="form-inline mr-auto w-100 navbar-search">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small"
-                                            placeholder="Search for..." aria-label="Search"
-                                            aria-describedby="basic-addon2">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
-                                                <i class="fas fa-search fa-sm"></i>
-                                            </button>
-                                        </div>
+                <ul class="navbar-nav ml-auto">
+
+                    <!-- ALERTS -->
+                    <li class="nav-item dropdown no-arrow mx-1">
+                        <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+                           data-toggle="dropdown">
+                            <i class="fas fa-bell fa-fw"></i>
+
+                            {% if alerts_count > 0 %}
+                                <span class="badge badge-danger badge-counter">{{ alerts_count }}</span>
+                            {% endif %}
+                        </a>
+
+                        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow">
+
+                            {% for assignment in overdue %}
+                            <a class="dropdown-item d-flex align-items-center">
+                                <div class="mr-3">
+                                    <div class="icon-circle bg-danger">
+                                        <i class="fas fa-exclamation text-white"></i>
                                     </div>
-                                </form>
-                            </div>
-                        </li>
-
-                        <!-- Nav Item - Alerts -->
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-bell fa-fw"></i>
-                                <!-- Counter - Alerts -->
-                                {% if alerts_count > 0 %}
-                                     <span class="badge badge-danger badge-counter">{{ alerts_count }}</span>
-                                {% endif %}
+                                </div>
+                                <div>
+                                    <div class="small text-gray-500">
+                                        {{ assignment.deadline|date:"M d, Y H:i" }}
+                                    </div>
+                                    <strong>{{ assignment.title }} is overdue!</strong>
+                                </div>
                             </a>
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in">
-                                {% for assignment in overdue %}
-                                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                                <div class="mr-3">
-                                                    <div class="icon-circle bg-danger">
-                                                        <i class="fas fa-exclamation text-white"></i>
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <div class="small text-gray-500">
-                                                        {{ assignment.deadline|date:"M d, Y H:i" }}
-                                                    </div>
-                                                    <span class="font-weight-bold">
-                                                        {{ assignment.title }} is overdue!
-                                                    </span>
-                                                </div>
-                                            </a>
-                                        {% endfor %}
-                                        {% for assignment in near_due %}
-                                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                                <div class="mr-3">
-                                                    <div class="icon-circle bg-warning">
-                                                        <i class="fas fa-clock text-white"></i>
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <div class="small text-gray-500">
-                                                        {{ assignment.deadline|date:"M d, Y H:i" }}
-                                                    </div>
-                                                    {{ assignment.title }} is due soon
-                                                </div>
-                                            </a>
-                                        {% endfor %}
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                            </div>
-                        </li>
+                            {% endfor %}
 
-                       
-                        <div class="topbar-divider d-none d-sm-block"></div>
-
-                        <!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ user.first_name }}</span>
-                                <img class="img-profile rounded-circle fa-sm fa-fw mr-2 text-gray-400"
-                                    src="{% static 'img/undraw_profile.svg'%}">
+                            {% for assignment in near_due %}
+                            <a class="dropdown-item d-flex align-items-center">
+                                <div class="mr-3">
+                                    <div class="icon-circle bg-warning">
+                                        <i class="fas fa-clock text-white"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="small text-gray-500">
+                                        {{ assignment.deadline|date:"M d, Y H:i" }}
+                                    </div>
+                                    {{ assignment.title }} is due soon
+                                </div>
                             </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-                                <a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{% url 'profile' %}">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
+                            {% endfor %}
 
-                            </div>
-                        </li>
-                        
-                                  <div class="container">
-                                <!-- Django Messages -->
-                                {% if messages %}
-                                    {% for message in messages %}
-                                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                                            {{ message }}
-                                            <button type="button" class="close" data-dismiss="alert">
-                                                <span>&times;</span>
-                                            </button>
-                                        </div>
-                                    {% endfor %}
-                                {% endif %}
+                            {% if not overdue and not near_due %}
+                                <div class="dropdown-item text-center small text-gray-500">
+                                    No alerts 🎉
+                                </div>
+                            {% endif %}
 
+                        </div>
+                    </li>
 
-                            </div>
-                          
+                    <!-- PROFILE -->
+                    <li class="nav-item dropdown no-arrow">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                           data-toggle="dropdown">
+
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                                {{ user.first_name }}
+                            </span>
+
+                            <img class="img-profile rounded-circle"
+                                 src="{% static 'img/undraw_profile.svg' %}"
+                                 style="width:35px;">
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right shadow">
+                            <a class="dropdown-item" href="{% url 'profile' %}">
+                                <i class="fas fa-user mr-2"></i> Profile
+                            </a>
+
+                            <div class="dropdown-divider"></div>
+
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                            </a>
+                        </div>
+                    </li>
+
+                </ul>
+
+            </nav>
+
+            <!-- MAIN CONTENT -->
+            <main class="container-fluid px-3 mt-3">
+
+                {% if overdue %}
+                <div class="alert alert-danger">
+                    <strong>Overdue</strong>
+                    <ul>
+                        {% for assignment in overdue %}
+                        <li>{{ assignment.title }}</li>
+                        {% endfor %}
                     </ul>
-
-                </nav>
-                <!-- End of Topbar -->
-<main>
-      {% if overdue %}
-                                <div class="alert alert-danger">
-                                    <strong>⚠ Overdue Assignments</strong>
-                                    <ul>
-                                        {% for assignment in overdue %}
-                                        <li>{{ assignment.title }} - {{ assignment.deadline|date:"M d, Y H:i" }}</li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                                {% endif %}
-                                {% if near_due %}
-                                <div class="alert alert-warning">
-                                    <strong>Assignments Due Soon</strong>
-                                    <ul>
-                                        {% for assignment in near_due %}
-                                        <li>{{ assignment.title }} - {{ assignment.deadline|date:"M d, Y H:i" }}</li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                                {% endif %}
-    {% block content %}
-    
-    {% endblock content %}
-</main>
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Student Assignment Tracker 2026</span>
-                    </div>
                 </div>
-            </footer>
-            <!-- End of Footer -->
+                {% endif %}
+
+                {% if near_due %}
+                <div class="alert alert-warning">
+                    <strong>Due Soon</strong>
+                    <ul>
+                        {% for assignment in near_due %}
+                        <li>{{ assignment.title }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                {% block content %}
+                {% endblock %}
+
+            </main>
 
         </div>
-        <!-- End of Content Wrapper -->
+
+        <!-- FOOTER -->
+        <footer class="text-center py-3 bg-white">
+            <small>© 2026 Student Task Manager</small>
+        </footer>
 
     </div>
-    <!-- End of Page Wrapper -->
+</div>
 
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary"  href="{% url 'login'%}">Logout</a>
-                </div>
+<!-- LOGOUT MODAL -->
+<div class="modal fade" id="logoutModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>Logout?</h5>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to logout?
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" href="{% url 'login' %}">Logout</a>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="{% static 'vendor/jquery/jquery.min.js'%}"></script>
-    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+<!-- JS -->
+<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js'%}"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="{% static 'js/sb-admin-2.min.js'%}"></script>
-
-    <!-- Page level plugins -->
-    <script src="{% static 'vendor/chart.js/Chart.min.js'%}"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="{% static 'js/demo/chart-area-demo.js'%}"></script>
-    <script src="{% static 'js/demo/chart-pie-demo.js'%}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.getElementById("menuToggle").addEventListener("click", function () {
+    document.getElementById("accordionSidebar").classList.toggle("d-none");
+});
+</script>
 
 </body>
-
 </html>
