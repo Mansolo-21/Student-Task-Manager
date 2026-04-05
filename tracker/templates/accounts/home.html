@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Task Manager</title>
+    <h1 class="display-4 font-weight-bold">
+    Stay Organized. Never Miss a Deadline.
+</h1>
+
+<p class="lead mt-3">
+    The smart way for students to manage assignments, track deadlines, and boost productivity.
+</p>
+
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #4e73df, #224abe);
+            color: white;
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .btn-custom {
+            padding: 12px 30px;
+            font-size: 18px;
+            border-radius: 30px;
+        }
+
+        .features {
+            background: white;
+            color: #333;
+            padding: 60px 20px;
+        }
+
+        .feature-box {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .feature-box i {
+            font-size: 40px;
+            color: #4e73df;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- HERO SECTION -->
+<div class="hero">
+    <h1 class="display-4 font-weight-bold">Student Task Management System</h1>
+    <p class="lead mt-3">
+        Never miss assignments again. Stay organized, productive, and in control.
+    </p>
+    <img src="{% static 'img/dashboard-preview.png' %}" 
+     class="img-fluid mt-4 shadow rounded" 
+     style="max-width:700px;">
+
+    <div class="mt-4">
+        <a href="{% url 'register' %}" class="btn btn-light btn-custom mr-3">Get Started</a>
+        <a href="{% url 'login' %}" class="btn btn-outline-light btn-custom">Login</a>
+    </div>
+</div>
+
+<!-- FEATURES SECTION -->
+<div class="features">
+    <div class="container">
+        <div class="row text-center">
+
+            <div class="col-md-4 feature-box">
+                <i class="fas fa-tasks"></i>
+                <h4>Track Assignments</h4>
+                <p>Easily add, manage, and organize your tasks in one place.</p>
+            </div>
+
+            <div class="col-md-4 feature-box">
+                <i class="fas fa-bell"></i>
+                <h4>Smart Alerts</h4>
+                <p>Get notified about deadlines and overdue assignments.</p>
+            </div>
+
+            <div class="col-md-4 feature-box">
+                <i class="fas fa-chart-line"></i>
+                <h4>Productivity Insights</h4>
+                <p>Monitor your performance and stay on top of your goals.</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="features text-center">
+    <h2 class="mb-4">Why Choose This System?</h2>
+    <p>Designed for students who want to stay organized, meet deadlines, and improve productivity.</p>
+</div>
+
+<!-- CTA SECTION -->
+<div class="hero" style="height: 60vh;">
+    <h2>Start Managing Your Tasks Smarter Today</h2>
+    <a href="{% url 'register' %}" class="btn btn-light btn-custom mt-3">Get Started Now</a>
+</div>
+
+</body>
+</html>
