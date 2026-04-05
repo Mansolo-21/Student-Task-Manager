@@ -11,14 +11,67 @@
     <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
 
+    <style>
+        /* 🔥 Notion-style soft background */
+        body {
+            background: #f8f9fc;
+        }
+
+        /* 🔥 Smooth sidebar (mobile) */
+        @media (max-width: 768px) {
+            #accordionSidebar {
+                position: fixed;
+                top: 0;
+                left: -250px;
+                width: 250px;
+                height: 100%;
+                z-index: 999;
+                transition: all 0.3s ease;
+            }
+
+            #accordionSidebar.active {
+                left: 0;
+            }
+        }
+
+        /* 🔥 Overlay */
+        #overlay {
+            display: none;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+            top: 0;
+            left: 0;
+            z-index: 998;
+        }
+
+        /* 🔥 Card feel */
+        .main-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        /* 🔥 Hover polish */
+        .main-card:hover {
+            transform: translateY(-2px);
+            transition: 0.2s;
+        }
+    </style>
+
 </head>
 
 <body id="page-top">
 
+<!-- OVERLAY -->
+<div id="overlay"></div>
+
 <div id="wrapper">
 
     <!-- SIDEBAR -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion d-none d-md-block" id="accordionSidebar">
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'dashboard' %}">
             <div class="sidebar-brand-icon">
@@ -35,7 +88,6 @@
                 <span>Home</span>
             </a>
         </li>
-
 
         <hr class="sidebar-divider">
 
@@ -58,11 +110,13 @@
                 <!-- MOBILE MENU BUTTON -->
                 <button class="btn btn-primary d-md-none" id="menuToggle">☰</button>
 
-                <h5 class="mb-0 text-primary ml-2">Student Task Manager</h5>
+                <h5 class="mb-0 font-weight-bold text-primary ml-2">
+                    Student Task Manager
+                </h5>
 
                 <ul class="navbar-nav ml-auto">
 
-                    <!-- ALERTS -->
+                    <!-- ALERTS (UNCHANGED) -->
                     <li class="nav-item dropdown no-arrow mx-1">
                         <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
                            data-toggle="dropdown">
@@ -116,7 +170,7 @@
                         </div>
                     </li>
 
-                    <!-- PROFILE -->
+                    <!-- PROFILE (UNCHANGED) -->
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                            data-toggle="dropdown">
@@ -150,30 +204,35 @@
             <!-- MAIN CONTENT -->
             <main class="container-fluid px-3 mt-3">
 
-                {% if overdue %}
-                <div class="alert alert-danger">
-                    <strong>Overdue</strong>
-                    <ul>
-                        {% for assignment in overdue %}
-                        <li>{{ assignment.title }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-                {% endif %}
+                <!-- Wrap everything in a clean card -->
+                <div class="main-card">
 
-                {% if near_due %}
-                <div class="alert alert-warning">
-                    <strong>Due Soon</strong>
-                    <ul>
-                        {% for assignment in near_due %}
-                        <li>{{ assignment.title }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-                {% endif %}
+                    {% if overdue %}
+                    <div class="alert alert-danger">
+                        <strong>Overdue</strong>
+                        <ul>
+                            {% for assignment in overdue %}
+                            <li>{{ assignment.title }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
 
-                {% block content %}
-                {% endblock %}
+                    {% if near_due %}
+                    <div class="alert alert-warning">
+                        <strong>Due Soon</strong>
+                        <ul>
+                            {% for assignment in near_due %}
+                            <li>{{ assignment.title }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+
+                    {% block content %}
+                    {% endblock %}
+
+                </div>
 
             </main>
 
@@ -210,8 +269,18 @@
 <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
 <script>
-document.getElementById("menuToggle").addEventListener("click", function () {
-    document.getElementById("accordionSidebar").classList.toggle("d-none");
+const toggleBtn = document.getElementById("menuToggle");
+const sidebar = document.getElementById("accordionSidebar");
+const overlay = document.getElementById("overlay");
+
+toggleBtn.addEventListener("click", () => {
+    sidebar.classList.toggle("active");
+    overlay.style.display = "block";
+});
+
+overlay.addEventListener("click", () => {
+    sidebar.classList.remove("active");
+    overlay.style.display = "none";
 });
 </script>
 
