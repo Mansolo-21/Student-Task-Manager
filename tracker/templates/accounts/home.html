@@ -5,14 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Task Manager</title>
-    <h1 class="display-4 font-weight-bold">
-    Stay Organized. Never Miss a Deadline.
-</h1>
 
-<p class="lead mt-3">
-    The smart way for students to manage assignments, track deadlines, and boost productivity.
-</p>
-
+    <!-- CSS -->
     <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
 
@@ -20,15 +14,17 @@
         body {
             background: linear-gradient(135deg, #4e73df, #224abe);
             color: white;
+            margin: 0;
         }
 
         .hero {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-direction: column;
             text-align: center;
+            padding: 20px;
         }
 
         .btn-custom {
@@ -53,6 +49,40 @@
             color: #4e73df;
             margin-bottom: 15px;
         }
+
+        /* ✅ Responsive Image */
+        .responsive-img {
+            width: 100%;
+            max-width: 700px;
+            height: auto;
+        }
+
+        /* Tablet */
+        @media (max-width: 992px) {
+            .responsive-img {
+                max-width: 500px;
+            }
+        }
+
+        /* Phone */
+        @media (max-width: 576px) {
+            .responsive-img {
+                max-width: 90%;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .btn-custom {
+                padding: 10px 20px;
+                font-size: 16px;
+            }
+        }
     </style>
 </head>
 
@@ -60,13 +90,16 @@
 
 <!-- HERO SECTION -->
 <div class="hero">
-    <h1 class="display-4 font-weight-bold">Student Task Management System</h1>
+    <h1 class="display-4 font-weight-bold">
+        Stay Organized. Never Miss a Deadline.
+    </h1>
+
     <p class="lead mt-3">
-        Never miss assignments again. Stay organized, productive, and in control.
+        The smart way for students to manage assignments, track deadlines, and boost productivity.
     </p>
+
     <img src="{% static 'img/dashboard-preview.png' %}" 
-     class="img-fluid mt-4 shadow rounded" 
-     style="max-width:700px;">
+         class="img-fluid mt-4 shadow rounded responsive-img">
 
     <div class="mt-4">
         <a href="{% url 'register' %}" class="btn btn-light btn-custom mr-3">Get Started</a>
@@ -100,13 +133,15 @@
         </div>
     </div>
 </div>
+
+<!-- WHY SECTION -->
 <div class="features text-center">
     <h2 class="mb-4">Why Choose This System?</h2>
     <p>Designed for students who want to stay organized, meet deadlines, and improve productivity.</p>
 </div>
 
 <!-- CTA SECTION -->
-<div class="hero" style="height: 60vh;">
+<div class="hero" style="min-height: 60vh;">
     <h2>Start Managing Your Tasks Smarter Today</h2>
     <a href="{% url 'register' %}" class="btn btn-light btn-custom mt-3">Get Started Now</a>
 </div>
