@@ -9,13 +9,18 @@
                     <h2 class="mb-0">Add Assignment</h2>
                 </div>
                 <div class="card-body">
-                    <form method="POST">
+                    <form method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
                         {{ form.as_p }}
                         <button type="submit" class="btn btn-primary w-100 mt-3" style="background-color: #3399ff; border-color: #2878cc;">
                             Save
                         </button>
+
                     </form>
+                    <div class="form-group">
+    <label>Upload File</label>
+    <input type="file" name="file" class="form-control">
+</div>
                 </div>
             </div>
         </div>

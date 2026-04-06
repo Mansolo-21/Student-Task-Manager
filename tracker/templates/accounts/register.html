@@ -3,187 +3,186 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Register</title>
 
-    <title>Register</title>
+<link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
+<link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
 
-    <!-- Custom fonts for this template-->
-    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+<style>
+body {
+    background: linear-gradient(135deg, #0b1a3d 0%, #1a2a5a 100%);
+}
 
-    <!-- Custom styles for this template-->
-    <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+.card {
+    border-radius: 12px;
+    background-color: #e6f0ff;
+    animation: fadeIn 0.6s ease-in-out;
+}
 
-    <style>
-        /* Very dark blue background */
-        body.bg-gradient-primary {
-            background: linear-gradient(135deg, #0b1a3d 0%, #1a2a5a 100%);
-        }
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 
-        /* Card styling */
-        .card {
-            border-radius: 12px;
-            background-color: #e6f0ff; /* light card for contrast */
-        }
+/* INPUT GROUP */
+.input-group-custom {
+    position: relative;
+    width: 100%;
+}
 
-        .card .card-header {
-            background-color: #007bff;
-            color: #fff;
-            font-weight: 600;
-            border-top-left-radius: 12px;
-            border-top-right-radius: 12px;
-            text-align: center;
-        }
+.input-group-custom i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #3399ff;
+    font-size: 14px;
+    z-index: 2;
+}
 
-        /* Form fields */
-        .form-control-user {
-            border-radius: 10px;
-            background-color: #f0f5ff;
-            border: 1px solid #3399ff;
-            padding: 0.75rem 1rem;
-            transition: all 0.3s ease;
-        }
+/* INPUT */
+.form-control-user {
+    height: 45px;
+    padding-left: 45px !important;
+    border-radius: 25px;
+}
 
-        .form-control-user:focus {
-            border-color: #0056b3;
-            box-shadow: 0 0 5px #3399ff;
-            background-color: #ffffff;
-        }
+/* FIX GRID SPACING */
+.row .input-group-custom {
+    margin-bottom: 15px;
+}
 
-        /* Primary button */
-        .btn-primary.btn-user {
-            background-color: #3399ff;
-            border-color: #2878cc;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
+/* BUTTON */
+.btn-user {
+    transition: 0.2s;
+}
 
-        .btn-primary.btn-user:hover {
-            background-color: #2878cc;
-            border-color: #1f5fa3;
-        }
+.btn-user:hover {
+    transform: scale(1.02);
+}
 
-        /* Social buttons */
-        .btn-google {
-            background-color: #4285f4;
-            color: #fff;
-            border-radius: 10px;
-            font-weight: 600;
-        }
+.btn-primary {
+    background-color: #3399ff;
+}
 
-        .btn-facebook {
-            background-color: #3b5998;
-            color: #fff;
-            border-radius: 10px;
-            font-weight: 600;
-        }
-
-        /* Links */
-        .text-gray-900 {
-            color: #ffffff !important;
-        }
-
-        .small a {
-            color: #a0c4ff;
-        }
-
-        .small a:hover {
-            color: #ffffff;
-            text-decoration: underline;
-        }
-
-        /* Side image */
-        .bg-register-image {
-            background: url('{% static "img/register-bg.jpg" %}') no-repeat center center;
-            background-size: cover;
-            border-top-left-radius: 12px;
-            border-bottom-left-radius: 12px;
-        }
-    </style>
+.btn-google {
+    background-color: #4285f4;
+    color: white;
+    border-radius: 25px;
+}
+</style>
 </head>
 
-<body class="bg-gradient-primary">
+<body>
 
-    <div class="container">
-    
+<div class="container">
 
-        <div class="card o-hidden border-0 shadow-lg my-5">
-            <div class="card-body p-0">
-                <div class="row">
-                 <div class="col-lg-5 d-none d-lg-block">
-    <img src="{% static 'img/register.jpeg' %}" 
-         class="img-fluid h-100 w-100" 
-         alt="Register Image">
+<div class="card shadow-lg my-5">
+<div class="card-body p-0">
+<div class="row">
+
+<!-- IMAGE -->
+<div class="col-lg-5 d-none d-lg-block">
+    <img src="{% static 'img/register.jpeg' %}" class="img-fluid h-100 w-100">
 </div>
-                    <div class="col-lg-7">
-                        <div class="p-5">
-                            <div class="card-header mb-4">Create an Account!</div>
-                            <form method="POST" action="{% url 'register' %}" class="user">
-                                {% csrf_token %}
-                                <div class="form-group row">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" name="first_name" class="form-control form-control-user"
-                                            placeholder="First Name">
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <input type="text" name="last_name" class="form-control form-control-user"
-                                            placeholder="Last Name">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <input type="email" name="email" class="form-control form-control-user"
-                                        placeholder="Email Address">
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="password" name="password" class="form-control form-control-user"
-                                            placeholder="Password">
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <input type="password" name="password2" class="form-control form-control-user"
-                                            placeholder="Repeat Password">
-                                    </div>
-                                </div>
-                                <button type="submit" class="btn btn-primary btn-user btn-block">Register Account</button>
-                                <hr>
-                                <a href="{% url 'google_login' %}" class="btn btn-google btn-user btn-block">
-                                            <i class="fab fa-google fa-fw"></i> Login with Google
-                                        </a>
-                                <a href="{% url 'dashboard'%}" class="btn btn-facebook btn-user btn-block">
-                                    <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
-                                </a>
-                            </form>
-                            <hr>
-                            <div class="text-center">
-                                <a class="small" href="{% url 'forgot_password'%}">Forgot Password?</a>
-                            </div>
-                            <div class="text-center">
-                                <a class="small" href="{% url 'login'%}">Already have an account? Login!</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
+<!-- FORM -->
+<div class="col-lg-7">
+<div class="p-5">
+
+<h4 class="text-center mb-4">Create Account</h4>
+
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-danger">{{ message }}</div>
+  {% endfor %}
+{% endif %}
+
+<form method="POST">
+{% csrf_token %}
+
+<!-- FIRST + LAST NAME -->
+<div class="form-row">
+    <div class="col-md-6">
+        <div class="input-group-custom">
+            <i class="fas fa-user"></i>
+            <input type="text" name="first_name"
+                   class="form-control form-control-user"
+                   placeholder="First Name">
+        </div>
     </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
-    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <div class="col-md-6">
+        <div class="input-group-custom">
+            <i class="fas fa-user"></i>
+            <input type="text" name="last_name"
+                   class="form-control form-control-user"
+                   placeholder="Last Name">
+        </div>
+    </div>
+</div>
 
-    <!-- Core plugin JavaScript-->
-    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+<!-- EMAIL -->
+<div class="input-group-custom mt-3">
+    <i class="fas fa-envelope"></i>
+    <input type="email" name="email"
+           class="form-control form-control-user"
+           placeholder="Email">
+</div>
 
-    <!-- Custom scripts for all pages-->
-    <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+<!-- PASSWORDS -->
+<div class="form-row mt-3">
+    <div class="col-md-6">
+        <div class="input-group-custom">
+            <i class="fas fa-lock"></i>
+            <input type="password" name="password"
+                   class="form-control form-control-user"
+                   placeholder="Password">
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="input-group-custom">
+            <i class="fas fa-lock"></i>
+            <input type="password" name="password2"
+                   class="form-control form-control-user"
+                   placeholder="Repeat Password">
+        </div>
+    </div>
+</div>
+
+<button class="btn btn-primary btn-user btn-block mt-4">
+    Register
+</button>
+
+<hr>
+
+<a href="{% url 'google_login' %}" class="btn btn-google btn-user btn-block">
+    <i class="fab fa-google"></i> Register with Google
+</a>
+
+</form>
+
+<hr>
+
+<div class="text-center">
+    <a href="{% url 'login' %}">Already have an account? Login</a>
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+</div>
+
+<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
 </body>
-
 </html>

@@ -55,6 +55,7 @@
                 <th>Priority</th>
                 <th>Status</th>
                 <th>Action</th>
+                <th>File</th>
             </tr>
         </thead>
         <tbody>
@@ -94,7 +95,17 @@
                            class="btn btn-success btn-sm mb-1">Complete</a>
                     {% endif %}
                 </td>
+                <td>
+    {% if assignment.file %}
+        <a href="{{ assignment.file.url }}" target="_blank" class="btn btn-sm btn-info">
+            View
+        </a>
+    {% else %}
+        <span class="text-muted">No file</span>
+    {% endif %}
+</td>
             </tr>
+            
         {% empty %}
             <tr>
                 <td colspan="6" class="text-center text-muted">

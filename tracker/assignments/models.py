@@ -23,6 +23,7 @@ class Assignment(models.Model):
         choices=PRIORITY_CHOICES,
         default='MEDIUM'
     )
+    file = models.FileField(upload_to='assignments/', blank=True, null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
 

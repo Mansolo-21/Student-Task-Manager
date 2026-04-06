@@ -16,14 +16,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path('', include('accounts.urls')),      # login, register
+    # App URLs
+    path('', include('accounts.urls')),        # login, register
     path('dashboard/', include('dashboard.urls')),
     path('assignments/', include('assignments.urls')),
     path('notifications/', include('notifications.urls')),
-    path('accounts/', include('allauth.urls')),
+    path('accounts/', include('allauth.urls')),  # social auth
 ]
 
+# Serve uploaded media files in development
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

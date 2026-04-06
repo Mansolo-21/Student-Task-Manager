@@ -47,10 +47,14 @@ def assignment_list(request):
 @login_required
 def add_assignment(request):
     if request.method == "POST":
-        form = AssignmentForm(request.POST)
+        # Include request.FILES for file uploads
+        form = AssignmentForm(request.POST, request.FILES)
         if form.is_valid():
             assignment = form.save(commit=False)
             assignment.user = request.user
+            # Save file if uploaded
+            if 'file' in request.FILES:
+                assignment.file = request.FILES['file']
             assignment.save()
             messages.success(request, "Assignment added successfully!")
             return redirect('assignment_list')
@@ -85,8 +89,11 @@ def update_assignment(request, pk):
     assignment = get_object_or_404(Assignment, pk=pk, user=request.user)
 
     if request.method == "POST":
-        form = AssignmentForm(request.POST, instance=assignment)
+        form = AssignmentForm(request.POST, request.FILES, instance=assignment)
         if form.is_valid():
+            # Update file if a new one is uploaded
+            if 'file' in request.FILES:
+                assignment.file = request.FILES['file']
             form.save()
             messages.success(request, "Assignment updated successfully!")
             return redirect('assignment_list')
