@@ -19,49 +19,68 @@ body {
     border-radius: 12px;
     background-color: #e6f0ff;
 }
-</style>
 
+/* INPUT */
+.input-group-custom {
+    position: relative;
+}
+
+.input-group-custom i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #3399ff;
+}
+
+.form-control-user {
+    height: 45px;
+    padding-left: 45px !important;
+    border-radius: 25px;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+    .p-5 { padding: 15px !important; }
+    .card { margin: 10px !important; }
+}
+</style>
 </head>
 
 <body>
 
-<div class="container px-3 px-md-4">
+<div class="container">
 <div class="row justify-content-center">
-<div class="col-xl-10 col-lg-12 col-md-9">
-
-<div class="card shadow-lg my-3 my-md-5">
-<div class="card-body p-0">
-
-<div class="row">
-
-<div class="col-lg-6 d-none d-lg-block">
-    <img src="{% static 'img/login.jpeg' %}" class="img-fluid h-100 w-100">
-</div>
-
 <div class="col-lg-6">
-<div class="p-3 p-md-5">
 
-<h4 class="text-center mb-4">Welcome Back!</h4>
+<div class="card shadow-lg my-5">
+<div class="card-body p-5">
+
+<h4 class="text-center mb-4">Welcome Back</h4>
 
 <form method="POST">
 {% csrf_token %}
 
-<input type="text" name="identifier" class="form-control mb-3" placeholder="Email or Admission Number">
-<input type="password" name="password" class="form-control mb-3" placeholder="Password">
+<div class="form-group input-group-custom">
+    <i class="fas fa-envelope"></i>
+    <input type="text" name="identifier"
+        class="form-control form-control-user"
+        placeholder="Email or Admission Number">
+</div>
 
-<button class="btn btn-primary btn-block">Login</button>
+<div class="form-group input-group-custom">
+    <i class="fas fa-lock"></i>
+    <input type="password" name="password"
+        class="form-control form-control-user"
+        placeholder="Password">
+</div>
+
+<button class="btn btn-primary btn-block">
+    Login
+</button>
+
 </form>
 
-<hr>
-
-<div class="text-center">
-<a href="{% url 'register' %}">Create account</a>
-</div>
-
-</div>
-</div>
-
-</div>
 </div>
 </div>
 

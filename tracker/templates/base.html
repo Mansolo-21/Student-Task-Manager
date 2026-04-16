@@ -2,7 +2,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Student Task Manager</title>
@@ -15,79 +14,69 @@ body {
     background: #f8f9fc;
 }
 
-/* Sidebar mobile */
-@media (max-width: 768px) {
-    #accordionSidebar {
-        position: fixed;
-        top: 0;
-        left: -250px;
-        width: 250px;
-        height: 100%;
-        z-index: 999;
-        transition: all 0.3s ease;
-    }
-    #accordionSidebar.active {
-        left: 0;
-    }
-}
-
-/* Overlay */
-#overlay {
-    display: none;
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.4);
-    top: 0;
-    left: 0;
-    z-index: 998;
-}
-
-/* Card */
+/* CARD */
 .main-card {
     background: white;
     border-radius: 12px;
+    padding: 20px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
-</style>
 
+/* MOBILE FIX */
+@media (max-width: 768px) {
+    main.container-fluid {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+
+    .main-card {
+        padding: 12px !important;
+    }
+
+    .navbar {
+        padding: 8px 10px !important;
+    }
+}
+</style>
 </head>
 
-<body id="page-top">
-
-<div id="overlay"></div>
+<body>
 
 <div id="wrapper">
 
-<!-- SIDEBAR -->
-<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'dashboard' %}">
-        <i class="fas fa-tasks"></i>
-        <span class="ml-2">Task Manager</span>
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion">
+
+<a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
+    <i class="fas fa-tasks"></i>
+    <div class="mx-2">Task Manager</div>
+</a>
+
+<hr>
+
+<li class="nav-item">
+    <a class="nav-link" href="#">
+        <i class="fas fa-home"></i> Home
     </a>
+</li>
 
-    <hr class="sidebar-divider">
+<li class="nav-item">
+    <a class="nav-link" href="#">
+        <i class="fas fa-plus"></i> Add Assignment
+    </a>
+</li>
 
-    <li class="nav-item"><a class="nav-link" href="{% url 'dashboard' %}">Home</a></li>
-    <li class="nav-item"><a class="nav-link" href="{% url 'add_assignment' %}">Add Assignment</a></li>
-    <li class="nav-item"><a class="nav-link" href="{% url 'assignment_list' %}">Assignments</a></li>
 </ul>
 
-<!-- CONTENT -->
 <div id="content-wrapper" class="d-flex flex-column">
-
 <div id="content">
 
-<!-- TOPBAR -->
 <nav class="navbar navbar-light bg-white shadow px-3">
-    <button class="btn btn-primary d-md-none" id="menuToggle">☰</button>
-    <h5 class="ml-2 mb-0 text-primary">Student Task Manager</h5>
+    <h5 class="text-primary">Dashboard</h5>
 </nav>
 
-<!-- MAIN -->
-<main class="container-fluid px-2 px-md-4 mt-3">
+<main class="container-fluid mt-3">
 
-<div class="main-card p-3 p-md-4">
+<div class="main-card">
 
 {% block content %}
 {% endblock %}
@@ -97,32 +86,12 @@ body {
 </main>
 
 </div>
-
-<footer class="text-center py-3 bg-white">
-    <small>© 2026 Student Task Manager</small>
-</footer>
-
 </div>
+
 </div>
 
 <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-
-<script>
-const toggleBtn = document.getElementById("menuToggle");
-const sidebar = document.getElementById("accordionSidebar");
-const overlay = document.getElementById("overlay");
-
-toggleBtn.onclick = () => {
-    sidebar.classList.toggle("active");
-    overlay.style.display = "block";
-};
-
-overlay.onclick = () => {
-    sidebar.classList.remove("active");
-    overlay.style.display = "none";
-};
-</script>
 
 </body>
 </html>
