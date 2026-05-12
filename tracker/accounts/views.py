@@ -55,25 +55,41 @@ def login_view(request):
         return redirect('dashboard')
 
     if request.method == "POST":
-        identifier = request.POST.get("identifier")  # email or adm no
+
+        # FIXED HERE
+        identifier = request.POST.get("username")
         password = request.POST.get("password")
 
-        # 🔥 Detect if email or admission number
+        # prevent None errors
+        if not identifier or not password:
+            messages.error(request, "Please fill in all fields")
+            return render(request, "accounts/login.html")
+
+        # detect if email or admission number
         if "@" in identifier:
+
             try:
                 user_obj = User.objects.get(email=identifier)
                 username = user_obj.username
+
             except User.DoesNotExist:
                 username = None
-        else:
-            username = identifier  # admission number
 
-        user = authenticate(request, username=username, password=password)
+        else:
+            username = identifier
+
+        user = authenticate(
+            request,
+            username=username,
+            password=password
+        )
 
         if user is not None:
+
             login(request, user)
 
-            role = user.profile.role
+            # safer profile handling
+            role = getattr(user.profile, 'role', None)
 
             if role == 'student':
                 return redirect('student_dashboard')
@@ -85,10 +101,12 @@ def login_view(request):
                 return redirect('dashboard')
 
         else:
-            messages.error(request, "Invalid email/admission number or password")
+            messages.error(
+                request,
+                "Invalid email/admission number or password"
+            )
 
-    return render(request, "accounts/login.html")  # ✅ FIXED PATH
-
+    return render(request, "accounts/login.html")
 
 # ================= LOGOUT =================
 @login_required
