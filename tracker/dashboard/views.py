@@ -1,14 +1,9 @@
-from django.shortcuts import render,redirect
-from assignments.models import Assignment
+from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
-from django.contrib import messages
 from datetime import timedelta
-from django.http import HttpResponse
-from django.template.loader import render_to_string
-import pdfkit 
-
-
+import pdfkit
+from assignments.models import Assignment
 
 
 @login_required
@@ -50,26 +45,28 @@ def dashboard(request):
 
     # ===== WEEKLY CHART =====
     today = timezone.now().date()
+
     days_since_sunday = today.weekday() + 1
     sunday = today - timedelta(days=days_since_sunday % 7)
 
     labels = []
-    created_data = []
+    total_data = []
     completed_data = []
 
     for i in range(7):
+
         day = sunday + timedelta(days=i)
         labels.append(day.strftime("%a"))
 
-        created_data.append(
-            assignments.filter(deadline__date=day).count()
-        )
+        day_assignments = assignments.filter(deadline__date=day)
+
+        total_data.append(day_assignments.count())
 
         completed_data.append(
-            assignments.filter(completed=True, deadline__date=day).count()
+            day_assignments.filter(completed=True).count()
         )
 
-    # ===== CONTEXT =====
+    # ===== CONTEXT (MUST BE OUTSIDE LOOP) =====
     context = {
         'total': total,
         'completed': completed,
@@ -77,9 +74,10 @@ def dashboard(request):
         'near_due': near_due,
         'overdue': overdue,
         'alerts_count': alerts_count,
+
         'labels': labels,
-        'created_data': created_data,
-        'completed_data': completed_data
+        'total_data': total_data,
+        'completed_data': completed_data,
     }
 
     return render(request, 'dashboard/index.html', context)

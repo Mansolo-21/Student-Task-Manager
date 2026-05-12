@@ -1,6 +1,166 @@
-<h1>Weekly Assignment Report for {{ user.first_name }}</h1>
-<ul>
-{% for label, created, completed in chart_data %}
-    <li>{{ label }} - Created: {{ created }}, Completed: {{ completed }}</li>
-{% endfor %}
-</ul>
+{% load static %}
+
+<div class="report-container">
+
+    <!-- HEADER -->
+    <div class="report-header">
+        <h2>📊 Weekly Assignment Report</h2>
+        <p class="text-muted">
+            Overview for <strong>{{ user.first_name }}</strong>
+        </p>
+    </div>
+
+    <!-- CARD -->
+    <div class="report-card">
+
+        <div class="table-responsive">
+
+            <table class="table table-hover align-middle">
+
+                <thead class="thead-light">
+                    <tr>
+                        <th>Week</th>
+                        <th>Created</th>
+                        <th>Completed</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                {% for label, created, completed in chart_data %}
+
+                    <tr>
+
+                        <!-- WEEK LABEL -->
+                        <td>
+                            <strong>{{ label }}</strong>
+                        </td>
+
+                        <!-- CREATED -->
+                        <td>
+                            <span class="badge badge-primary">
+                                {{ created }}
+                            </span>
+                        </td>
+
+                        <!-- COMPLETED -->
+                        <td>
+                            <span class="badge badge-success">
+                                {{ completed }}
+                            </span>
+                        </td>
+
+                        <!-- STATUS -->
+                        <td>
+
+                            {% if completed >= created %}
+                                <span class="status ok">✔ On Track</span>
+
+                            {% elif completed > 0 %}
+                                <span class="status progress">⏳ In Progress</span>
+
+                            {% else %}
+                                <span class="status danger">❌ Not Started</span>
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- STYLES -->
+<style>
+
+.report-container{
+    padding:12px;
+}
+
+/* HEADER */
+.report-header{
+    margin-bottom:15px;
+}
+
+.report-header h2{
+    font-size:22px;
+    font-weight:700;
+    margin-bottom:4px;
+}
+
+/* CARD */
+.report-card{
+    background:#fff;
+    border-radius:16px;
+    padding:18px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.05);
+}
+
+/* TABLE */
+.table th{
+    font-size:14px;
+    font-weight:600;
+}
+
+.table td{
+    font-size:14px;
+    vertical-align:middle;
+}
+
+/* STATUS TAGS */
+.status{
+    font-weight:600;
+    padding:6px 10px;
+    border-radius:20px;
+    font-size:13px;
+    display:inline-block;
+}
+
+.status.ok{
+    background:#e6f9ee;
+    color:#1cc88a;
+}
+
+.status.progress{
+    background:#fff4e5;
+    color:#f6c23e;
+}
+
+.status.danger{
+    background:#fdecea;
+    color:#e74a3b;
+}
+
+/* MOBILE */
+@media (max-width:768px){
+
+    .report-header h2{
+        font-size:18px;
+    }
+
+    .report-card{
+        padding:14px;
+    }
+
+    .table td,
+    .table th{
+        font-size:13px;
+    }
+
+    .status{
+        font-size:12px;
+        padding:5px 8px;
+    }
+}
+
+</style>
