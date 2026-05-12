@@ -1,101 +1,429 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
 
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Create Account</title>
 
+<!-- Fonts & Icons -->
 <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
+
+<!-- Bootstrap -->
 <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
 
 <style>
-body {
-    background: linear-gradient(135deg, #0b1a3d, #1a2a5a);
+
+body{
+    min-height:100vh;
+    background: linear-gradient(135deg,#08142e 0%,#12265a 100%);
+    font-family: 'Nunito', sans-serif;
+    display:flex;
+    align-items:center;
 }
 
-/* INPUT */
-.input-group-custom {
-    position: relative;
+/* CARD */
+.register-card{
+    border:none;
+    overflow:hidden;
+    border-radius:20px;
+    background:#edf3ff;
+    animation:fadeIn .6s ease;
+    box-shadow:0 20px 40px rgba(0,0,0,0.25);
 }
 
-.input-group-custom i {
-    position: absolute;
-    left: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #3399ff;
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
 }
 
-.form-control-user {
-    height: 45px;
-    padding-left: 45px !important;
-    border-radius: 25px;
+/* IMAGE */
+.side-image img{
+    object-fit:cover;
+    height:100%;
+}
+
+/* FORM AREA */
+.form-section{
+    padding:50px 40px;
+}
+
+.form-title{
+    font-weight:800;
+    color:#10244d;
+}
+
+.form-subtitle{
+    color:#5d6b88;
+    font-size:14px;
+}
+
+/* FLOATING INPUT */
+.input-box{
+    position:relative;
+    margin-bottom:22px;
+}
+
+.input-box input{
+    width:100%;
+    height:55px;
+    border-radius:14px;
+    border:1.5px solid #b9d3ff;
+    background:#f7faff;
+    padding:18px 45px 0 50px;
+    font-size:15px;
+    outline:none;
+    transition:.25s ease;
+}
+
+.input-box input:focus{
+    border-color:#2f80ff;
+    box-shadow:0 0 0 4px rgba(47,128,255,0.15);
+    background:white;
+}
+
+/* LABEL */
+.input-box label{
+    position:absolute;
+    left:50px;
+    top:17px;
+    color:#7c8cab;
+    font-size:14px;
+    pointer-events:none;
+    transition:.2s ease;
+    background:transparent;
+}
+
+/* FLOAT EFFECT */
+.input-box input:focus + label,
+.input-box input:not(:placeholder-shown) + label{
+    top:8px;
+    font-size:11px;
+    color:#2f80ff;
+}
+
+/* LEFT ICON */
+.input-box .left-icon{
+    position:absolute;
+    left:18px;
+    top:50%;
+    transform:translateY(-50%);
+    color:#2f80ff;
+    font-size:15px;
+}
+
+/* PASSWORD TOGGLE */
+.toggle-password{
+    position:absolute;
+    right:18px;
+    top:50%;
+    transform:translateY(-50%);
+    cursor:pointer;
+    color:#7c8cab;
+}
+
+/* PASSWORD STRENGTH */
+.strength-meter{
+    height:6px;
+    border-radius:10px;
+    margin-top:8px;
+    background:#dbe7ff;
+    overflow:hidden;
+}
+
+.strength-fill{
+    height:100%;
+    width:0%;
+    transition:.3s;
+}
+
+/* BUTTON */
+.btn-register{
+    height:52px;
+    border:none;
+    border-radius:14px;
+    background:linear-gradient(135deg,#2f80ff,#4a90ff);
+    color:white;
+    font-weight:700;
+    transition:.25s;
+}
+
+.btn-register:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 20px rgba(47,128,255,0.25);
+}
+
+/* GOOGLE BUTTON */
+.btn-google{
+    height:52px;
+    border-radius:14px;
+    background:white;
+    border:1px solid #dbe7ff;
+    color:#1f3b72;
+    font-weight:700;
+    transition:.25s;
+}
+
+.btn-google:hover{
+    background:#f7faff;
+}
+
+/* LINKS */
+.auth-link{
+    color:#2f80ff;
+    font-weight:600;
+}
+
+.auth-link:hover{
+    text-decoration:none;
+}
+
+/* ALERT */
+.alert{
+    border-radius:12px;
 }
 
 /* MOBILE */
-@media (max-width: 768px) {
-    .p-5 { padding: 15px !important; }
-    .form-row { display: block; }
+@media(max-width:991px){
+
+    .side-image{
+        display:none;
+    }
+
+    .form-section{
+        padding:40px 25px;
+    }
 }
+
 </style>
 </head>
 
 <body>
 
 <div class="container">
-<div class="card shadow-lg my-5">
-<div class="card-body p-5">
 
-<h4 class="text-center mb-4">Register</h4>
+<div class="card register-card">
+
+<div class="row no-gutters">
+
+<!-- IMAGE -->
+<div class="col-lg-5 side-image">
+    <img src="{% static 'img/register.jpeg' %}" class="w-100">
+</div>
+
+<!-- FORM -->
+<div class="col-lg-7">
+
+<div class="form-section">
+
+<div class="text-center mb-4">
+    <h2 class="form-title">Create Account</h2>
+    <p class="form-subtitle">
+        Join Student Task Manager today
+    </p>
+</div>
+
+<!-- ERRORS -->
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
 
 <form method="POST">
+
 {% csrf_token %}
 
-<div class="form-row">
-<div class="col-md-6">
-    <div class="input-group-custom">
-        <i class="fas fa-user"></i>
-        <input type="text" name="first_name" class="form-control form-control-user" placeholder="First Name">
-    </div>
-</div>
+<!-- NAME ROW -->
+<div class="row">
 
 <div class="col-md-6">
-    <div class="input-group-custom">
-        <i class="fas fa-user"></i>
-        <input type="text" name="last_name" class="form-control form-control-user" placeholder="Last Name">
-    </div>
-</div>
+
+<div class="input-box">
+    <i class="fas fa-user left-icon"></i>
+
+    <input type="text"
+           name="first_name"
+           placeholder=" "
+           required>
+
+    <label>First Name</label>
 </div>
 
-<div class="input-group-custom mt-3">
-    <i class="fas fa-envelope"></i>
-    <input type="email" name="email" class="form-control form-control-user" placeholder="Email">
-</div>
-
-<div class="form-row mt-3">
-<div class="col-md-6">
-    <div class="input-group-custom">
-        <i class="fas fa-lock"></i>
-        <input type="password" name="password" class="form-control form-control-user" placeholder="Password">
-    </div>
 </div>
 
 <div class="col-md-6">
-    <div class="input-group-custom">
-        <i class="fas fa-lock"></i>
-        <input type="password" name="password2" class="form-control form-control-user" placeholder="Repeat Password">
-    </div>
-</div>
+
+<div class="input-box">
+    <i class="fas fa-user left-icon"></i>
+
+    <input type="text"
+           name="last_name"
+           placeholder=" "
+           required>
+
+    <label>Last Name</label>
 </div>
 
-<button class="btn btn-primary btn-block mt-3">Register</button>
+</div>
+
+</div>
+
+<!-- EMAIL -->
+<div class="input-box">
+    <i class="fas fa-envelope left-icon"></i>
+
+    <input type="email"
+           name="email"
+           placeholder=" "
+           required>
+
+    <label>Email Address</label>
+</div>
+
+<!-- PASSWORD -->
+<div class="input-box">
+    <i class="fas fa-lock left-icon"></i>
+
+    <input type="password"
+           id="password"
+           name="password"
+           placeholder=" "
+           required>
+
+    <label>Password</label>
+
+    <i class="fas fa-eye toggle-password"
+       onclick="togglePassword('password', this)"></i>
+
+    <!-- STRENGTH -->
+    <div class="strength-meter">
+        <div class="strength-fill" id="strengthFill"></div>
+    </div>
+</div>
+
+<!-- REPEAT PASSWORD -->
+<div class="input-box">
+    <i class="fas fa-lock left-icon"></i>
+
+    <input type="password"
+           id="password2"
+           name="password2"
+           placeholder=" "
+           required>
+
+    <label>Repeat Password</label>
+
+    <i class="fas fa-eye toggle-password"
+       onclick="togglePassword('password2', this)"></i>
+</div>
+
+<!-- BUTTON -->
+<button type="submit"
+        class="btn btn-register btn-block">
+    Create Account
+</button>
+
+<hr>
+
+<!-- GOOGLE -->
+<a href="{% url 'google_login' %}"
+   class="btn btn-google btn-block">
+
+   <i class="fab fa-google mr-2"></i>
+   Register with Google
+
+</a>
 
 </form>
 
+<hr>
+
+<div class="text-center">
+
+<a href="{% url 'login' %}"
+   class="auth-link">
+
+   Already have an account? Login
+
+</a>
+
 </div>
+
 </div>
+
 </div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- JS -->
+<script>
+
+function togglePassword(id, icon){
+
+    const input = document.getElementById(id);
+
+    if(input.type === "password"){
+        input.type = "text";
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
+    }else{
+        input.type = "password";
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
+    }
+}
+
+/* PASSWORD STRENGTH */
+
+const password = document.getElementById("password");
+const strengthFill = document.getElementById("strengthFill");
+
+password.addEventListener("input", function(){
+
+    const val = password.value;
+    let strength = 0;
+
+    if(val.length > 5) strength += 25;
+    if(val.match(/[A-Z]/)) strength += 25;
+    if(val.match(/[0-9]/)) strength += 25;
+    if(val.match(/[^A-Za-z0-9]/)) strength += 25;
+
+    strengthFill.style.width = strength + "%";
+
+    if(strength <= 25){
+        strengthFill.style.background = "#ff4d4d";
+    }
+    else if(strength <= 50){
+        strengthFill.style.background = "#ffb84d";
+    }
+    else if(strength <= 75){
+        strengthFill.style.background = "#ffd24d";
+    }
+    else{
+        strengthFill.style.background = "#28c76f";
+    }
+
+});
+
+</script>
+
+<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
 </body>
 </html>

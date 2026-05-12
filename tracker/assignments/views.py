@@ -64,7 +64,7 @@ def assignment_list(request):
 # =========================
 # CREATE ASSIGNMENT
 # =========================
-
+@staff_member_required
 @login_required
 def add_assignment(request):
 

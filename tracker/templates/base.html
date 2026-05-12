@@ -10,33 +10,110 @@
 <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
 
 <style>
-body {
-    background: #f8f9fc;
+
+body{
+    background:#f8f9fc;
+    overflow-x:hidden;
+}
+
+/* SIDEBAR */
+.sidebar{
+    min-height:100vh;
 }
 
 /* CARD */
-.main-card {
-    background: white;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+.main-card{
+    background:white;
+    border-radius:16px;
+    padding:24px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.05);
 }
 
-/* MOBILE FIX */
-@media (max-width: 768px) {
-    main.container-fluid {
-        padding-left: 10px !important;
-        padding-right: 10px !important;
+/* NAVBAR */
+.topbar-title{
+    font-size:22px;
+    font-weight:700;
+}
+
+/* NAV LINKS */
+.nav-link{
+    padding:14px 18px !important;
+    font-size:15px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.nav-link i{
+    width:20px;
+    text-align:center;
+}
+
+/* MOBILE RESPONSIVENESS */
+@media (max-width: 768px){
+
+    body{
+        font-size:14px;
     }
 
-    .main-card {
-        padding: 12px !important;
+    /* CONTENT SPACING */
+    main.container-fluid{
+        padding-left:12px !important;
+        padding-right:12px !important;
+        padding-bottom:20px;
     }
 
-    .navbar {
-        padding: 8px 10px !important;
+    /* CARD */
+    .main-card{
+        padding:16px !important;
+        border-radius:14px;
+    }
+
+    /* TOPBAR */
+    .navbar{
+        padding:12px !important;
+    }
+
+    .topbar-title{
+        font-size:18px;
+    }
+
+    /* SIDEBAR */
+    .sidebar{
+        width:220px !important;
+    }
+
+    .sidebar-brand{
+        padding:18px 10px;
+        font-size:16px;
+    }
+
+    .nav-link{
+        padding:12px 15px !important;
+        font-size:14px;
+    }
+
+    .nav-link i{
+        font-size:15px;
     }
 }
+
+/* EXTRA SMALL DEVICES */
+@media (max-width: 480px){
+
+    .main-card{
+        padding:14px !important;
+    }
+
+    .topbar-title{
+        font-size:16px;
+    }
+
+    .nav-link{
+        font-size:13px;
+    }
+}
+
 </style>
 </head>
 
@@ -44,52 +121,97 @@ body {
 
 <div id="wrapper">
 
-<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion">
+    <!-- SIDEBAR -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion">
 
-<a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
-    <i class="fas fa-tasks"></i>
-    <div class="mx-2">Task Manager</div>
-</a>
+        <!-- LOGO -->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
+            <i class="fas fa-tasks"></i>
+            <div class="mx-2">Task Manager</div>
+        </a>
 
-<hr>
+        <hr class="sidebar-divider my-0">
 
+        <!-- HOME -->
+        <li class="nav-item active">
+            <a class="nav-link" href="{% url 'home'%}">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+        </li>
+
+        <!-- ADD ASSIGNMENT -->
+{% if user.is_superuser or user.is_staff %}
 <li class="nav-item">
-    <a class="nav-link" href="#">
-        <i class="fas fa-home"></i> Home
+    <a class="nav-link" href="{% url 'add_assignment' %}">
+        <i class="fas fa-plus-circle"></i>
+        <span>Add Assignment</span>
     </a>
 </li>
+{% endif %}
 
-<li class="nav-item">
-    <a class="nav-link" href="#">
-        <i class="fas fa-plus"></i> Add Assignment
-    </a>
-</li>
+        <!-- ALL ASSIGNMENTS -->
+        <li class="nav-item">
+            <a class="nav-link" href="{%url 'assignment_list'%}">
+                <i class="fas fa-list"></i>
+                <span>All Assignments</span>
+            </a>
+        </li>
 
-</ul>
+        <!-- COMPLETED ASSIGNMENTS -->
+        <li class="nav-item">
+            <a class="nav-link" href="{%url 'completed_assignments'%}">
+                <i class="fas fa-check-circle"></i>
+                <span>Completed Assignments</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{%url 'create_project'%}">
+                <i class="fas fa-project-diagram"></i>
+                <span>Add Project</span>
+            </a>
+        </li>
+        <!-- PROJECT LIST -->
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'project_list'%}">
+                <i class="fas fa-project-diagram"></i>
+                <span>Project List</span>
+            </a>
+        </li>
 
-<div id="content-wrapper" class="d-flex flex-column">
-<div id="content">
+    </ul>
 
-<nav class="navbar navbar-light bg-white shadow px-3">
-    <h5 class="text-primary">Dashboard</h5>
-</nav>
+    <!-- CONTENT WRAPPER -->
+    <div id="content-wrapper" class="d-flex flex-column">
 
-<main class="container-fluid mt-3">
+        <div id="content">
 
-<div class="main-card">
+            <!-- TOPBAR -->
+            <nav class="navbar navbar-light bg-white shadow-sm px-3">
+                <h5 class="text-primary mb-0 topbar-title">
+                    Dashboard
+                </h5>
+            </nav>
 
-{% block content %}
-{% endblock %}
+            <!-- MAIN CONTENT -->
+            <main class="container-fluid mt-3">
+
+                <div class="main-card">
+
+                    {% block content %}
+                    {% endblock %}
+
+                </div>
+
+            </main>
+
+        </div>
+
+    </div>
 
 </div>
 
-</main>
-
-</div>
-</div>
-
-</div>
-
+<!-- SCRIPTS -->
 <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 

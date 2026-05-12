@@ -1,92 +1,370 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
 
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Login</title>
 
+<!-- Fonts & Icons -->
 <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
+
+<!-- Bootstrap -->
 <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
 
 <style>
-body {
-    background: linear-gradient(135deg, #0b1a3d, #1a2a5a);
+
+body{
+    min-height:100vh;
+    background: linear-gradient(135deg,#08142e 0%,#12265a 100%);
+    font-family:'Nunito',sans-serif;
+    display:flex;
+    align-items:center;
 }
 
-.card {
-    border-radius: 12px;
-    background-color: #e6f0ff;
+/* CARD */
+.login-card{
+    border:none;
+    overflow:hidden;
+    border-radius:20px;
+    background:#edf3ff;
+    animation:fadeIn .6s ease;
+    box-shadow:0 20px 40px rgba(0,0,0,0.25);
 }
 
-/* INPUT */
-.input-group-custom {
-    position: relative;
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
 }
 
-.input-group-custom i {
-    position: absolute;
-    left: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #3399ff;
+/* IMAGE */
+.side-image img{
+    object-fit:cover;
+    height:100%;
 }
 
-.form-control-user {
-    height: 45px;
-    padding-left: 45px !important;
-    border-radius: 25px;
+/* FORM AREA */
+.form-section{
+    padding:50px 40px;
+}
+
+.form-title{
+    font-weight:800;
+    color:#10244d;
+}
+
+.form-subtitle{
+    color:#5d6b88;
+    font-size:14px;
+}
+
+/* INPUTS */
+.input-box{
+    position:relative;
+    margin-bottom:22px;
+}
+
+.input-box input{
+    width:100%;
+    height:55px;
+    border-radius:14px;
+    border:1.5px solid #b9d3ff;
+    background:#f7faff;
+    padding:18px 45px 0 50px;
+    font-size:15px;
+    outline:none;
+    transition:.25s ease;
+}
+
+.input-box input:focus{
+    border-color:#2f80ff;
+    box-shadow:0 0 0 4px rgba(47,128,255,0.15);
+    background:white;
+}
+
+/* LABELS */
+.input-box label{
+    position:absolute;
+    left:50px;
+    top:17px;
+    color:#7c8cab;
+    font-size:14px;
+    pointer-events:none;
+    transition:.2s ease;
+}
+
+/* FLOATING EFFECT */
+.input-box input:focus + label,
+.input-box input:not(:placeholder-shown) + label{
+    top:8px;
+    font-size:11px;
+    color:#2f80ff;
+}
+
+/* LEFT ICON */
+.left-icon{
+    position:absolute;
+    left:18px;
+    top:50%;
+    transform:translateY(-50%);
+    color:#2f80ff;
+    font-size:15px;
+}
+
+/* SHOW PASSWORD */
+.toggle-password{
+    position:absolute;
+    right:18px;
+    top:50%;
+    transform:translateY(-50%);
+    cursor:pointer;
+    color:#7c8cab;
+}
+
+/* BUTTON */
+.btn-login{
+    height:52px;
+    border:none;
+    border-radius:14px;
+    background:linear-gradient(135deg,#2f80ff,#4a90ff);
+    color:white;
+    font-weight:700;
+    transition:.25s;
+}
+
+.btn-login:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 20px rgba(47,128,255,0.25);
+}
+
+/* GOOGLE BUTTON */
+.btn-google{
+    height:52px;
+    border-radius:14px;
+    background:white;
+    border:1px solid #dbe7ff;
+    color:#1f3b72;
+    font-weight:700;
+    transition:.25s;
+}
+
+.btn-google:hover{
+    background:#f7faff;
+}
+
+/* CHECKBOX */
+.custom-checkbox{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:20px;
+    color:#5d6b88;
+    font-size:14px;
+}
+
+/* LINKS */
+.auth-link{
+    color:#2f80ff;
+    font-weight:600;
+}
+
+.auth-link:hover{
+    text-decoration:none;
+}
+
+/* ALERT */
+.alert{
+    border-radius:12px;
 }
 
 /* MOBILE */
-@media (max-width: 768px) {
-    .p-5 { padding: 15px !important; }
-    .card { margin: 10px !important; }
+@media(max-width:991px){
+
+    .side-image{
+        display:none;
+    }
+
+    .form-section{
+        padding:40px 25px;
+    }
 }
+
 </style>
 </head>
 
 <body>
 
 <div class="container">
-<div class="row justify-content-center">
-<div class="col-lg-6">
 
-<div class="card shadow-lg my-5">
-<div class="card-body p-5">
+<div class="card login-card">
 
-<h4 class="text-center mb-4">Welcome Back</h4>
+<div class="row no-gutters">
+
+<!-- IMAGE -->
+<div class="col-lg-5 side-image">
+    <img src="{% static 'img/login.jpeg' %}" class="w-100">
+</div>
+
+<!-- FORM -->
+<div class="col-lg-7">
+
+<div class="form-section">
+
+<div class="text-center mb-4">
+    <h2 class="form-title">Welcome Back</h2>
+
+    <p class="form-subtitle">
+        Login to continue to Student Task Manager
+    </p>
+</div>
+
+<!-- ERRORS -->
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
 
 <form method="POST">
+
 {% csrf_token %}
 
-<div class="form-group input-group-custom">
-    <i class="fas fa-envelope"></i>
-    <input type="text" name="identifier"
-        class="form-control form-control-user"
-        placeholder="Email or Admission Number">
+<!-- USERNAME -->
+<div class="input-box">
+
+    <i class="fas fa-user left-icon"></i>
+
+    <input type="text"
+           name="username"
+           placeholder=" "
+           required>
+
+    <label>Username</label>
+
 </div>
 
-<div class="form-group input-group-custom">
-    <i class="fas fa-lock"></i>
-    <input type="password" name="password"
-        class="form-control form-control-user"
-        placeholder="Password">
+<!-- PASSWORD -->
+<div class="input-box">
+
+    <i class="fas fa-lock left-icon"></i>
+
+    <input type="password"
+           id="password"
+           name="password"
+           placeholder=" "
+           required>
+
+    <label>Password</label>
+
+    <i class="fas fa-eye toggle-password"
+       onclick="togglePassword()"></i>
+
 </div>
 
-<button class="btn btn-primary btn-block">
+<!-- REMEMBER -->
+<div class="custom-checkbox">
+
+    <input type="checkbox" id="remember">
+
+    <label for="remember">
+        Remember Me
+    </label>
+
+</div>
+
+<!-- LOGIN BUTTON -->
+<button type="submit"
+        class="btn btn-login btn-block">
+
     Login
+
 </button>
+
+<hr>
+
+<!-- GOOGLE -->
+<a href="{% url 'google_login' %}"
+   class="btn btn-google btn-block">
+
+    <i class="fab fa-google mr-2"></i>
+    Login with Google
+
+</a>
 
 </form>
 
+<hr>
+
+<div class="text-center mb-2">
+
+<a href="{% url 'forgot_password' %}"
+   class="auth-link">
+
+   Forgot Password?
+
+</a>
+
 </div>
+
+<div class="text-center">
+
+<a href="{% url 'register' %}"
+   class="auth-link">
+
+   Create an Account
+
+</a>
+
 </div>
 
 </div>
+
 </div>
+
 </div>
+
+</div>
+
+</div>
+
+<!-- JS -->
+<script>
+
+function togglePassword(){
+
+    const password = document.getElementById("password");
+    const icon = document.querySelector(".toggle-password");
+
+    if(password.type === "password"){
+
+        password.type = "text";
+
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
+
+    }else{
+
+        password.type = "password";
+
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
+    }
+}
+
+</script>
+
+<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
 </body>
 </html>
