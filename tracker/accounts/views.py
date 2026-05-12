@@ -92,10 +92,10 @@ def login_view(request):
             role = getattr(user.profile, 'role', None)
 
             if role == 'student':
-                return redirect('student_dashboard')
+                return redirect('dashboard')
 
             elif role == 'teacher':
-                return redirect('teacher_dashboard')
+                return redirect('dashboard')
 
             else:
                 return redirect('dashboard')
