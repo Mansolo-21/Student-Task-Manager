@@ -236,7 +236,45 @@ body{
                 <h5 class="text-primary mb-0 topbar-title">
                     Dashboard
                 </h5>
+                <div class="dropdown">
 
+                    <a class="nav-link dropdown-toggle position-relative"
+                    href="#"
+                    data-bs-toggle="dropdown">
+
+                        <i class="fas fa-bell"></i>
+
+                        {% if unread_count > 0 %}
+                        <span class="badge bg-danger position-absolute top-0 start-100 translate-middle">
+                            {{ unread_count }}
+                        </span>
+                        {% endif %}
+
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end shadow">
+
+                        {% for n in notifications %}
+                        <li>
+                            <a class="dropdown-item small"
+                            href="{% url 'mark_notification_read' n.id %}">
+
+                                {{ n.message }}
+
+                                <br>
+                                <small class="text-muted">
+                                    {{ n.created_at|timesince }} ago
+                                </small>
+
+                            </a>
+                        </li>
+                        {% empty %}
+                        <li class="dropdown-item text-muted">No notifications</li>
+                        {% endfor %}
+
+                    </ul>
+
+                </div>
                 <!-- PROFILE DROPDOWN -->
                 <div class="dropdown">
 
@@ -250,13 +288,14 @@ body{
                         <i class="fas fa-user"></i>
 
                     </button>
+                    
 
                     <!-- DROPDOWN MENU -->
                     <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                          aria-labelledby="userDropdown">
 
                         <!-- PROFILE -->
-                        <a class="dropdown-item" href="{% url 'profile_list'%}">
+                        <a class="dropdown-item" href="{% url 'profile_view'%}">
                             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                             Profile
                         </a>
@@ -269,6 +308,7 @@ body{
 
                             <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2"></i>
                             Logout
+
 
                         </a>
 

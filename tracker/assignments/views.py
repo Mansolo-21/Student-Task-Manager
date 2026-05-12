@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Case, When, Value, IntegerField, Q
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.models import User
+from notifications.models import Notification
 
 from .models import Assignment, Project
 from .forms import AssignmentForm, ProjectForm
@@ -65,37 +67,43 @@ def assignment_list(request):
 # =========================
 # CREATE ASSIGNMENT
 # =========================
-@staff_member_required
+
 @login_required
 def add_assignment(request):
 
-    if request.user.profile.role != 'teacher':
-        messages.error(request, "Only teachers can create assignments.")
-        return redirect('assignment_list')
+    if request.user.profile.role not in ['teacher', 'admin']:
+        return redirect('dashboard')
 
     if request.method == "POST":
-        form = AssignmentForm(request.POST, request.FILES)
 
-        if form.is_valid():
-            assignment = form.save(commit=False)
+        title = request.POST.get("title")
+        description = request.POST.get("description")
+        deadline = request.POST.get("deadline")
 
-            assignment.created_by = request.user
+        assignment = Assignment.objects.create(
+            title=title,
+            description=description,
+            deadline=deadline,
+            created_by=request.user
+        )
 
-            assigned_student = request.POST.get('assigned_to')
-            if assigned_student:
-                assignment.assigned_to_id = assigned_student
+        # 🔥 assign to ALL students
+        students = User.objects.filter(profile__role="student")
+        assignment.assigned_to.set(students)
 
-            assignment.save()
+        # 🔔 CREATE NOTIFICATIONS FOR ALL STUDENTS
+        notifications = [
+            Notification(
+                user=student,
+                message=f"New assignment: {title}"
+            )
+            for student in students
+        ]
+        Notification.objects.bulk_create(notifications)
 
-            messages.success(request, "Assignment created successfully!")
-            return redirect('assignment_list')
+        return redirect('assignment_list')
 
-    else:
-        form = AssignmentForm()
-
-    return render(request, 'assignments/add.html', {
-        'form': form
-    })
+    return render(request, "assignments/add.html")
 
 
 # =========================

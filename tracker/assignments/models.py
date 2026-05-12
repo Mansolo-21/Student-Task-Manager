@@ -26,13 +26,13 @@ class Assignment(models.Model):
     ]
 
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_assignments')
-    assigned_to = models.ForeignKey(
-    User,
-    on_delete=models.CASCADE,
-    related_name='assigned_assignments',
-    null=True,   # ✅ TEMPORARY FIX
-    blank=True   # ✅ TEMPORARY FIX
-)
+
+    # ✅ FIXED: allow multiple students
+    assigned_to = models.ManyToManyField(
+        User,
+        related_name='assigned_assignments',
+        blank=True
+    )
 
     subject = models.CharField(max_length=100)
     title = models.CharField(max_length=200)
@@ -45,11 +45,11 @@ class Assignment(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return self.title
-
     class Meta:
         ordering = ['deadline']
+
+    def __str__(self):
+        return self.title
 
     @property
     def is_overdue(self):

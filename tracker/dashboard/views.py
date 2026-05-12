@@ -6,6 +6,15 @@ import pdfkit
 from assignments.models import Assignment
 
 
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+from django.utils import timezone
+from datetime import timedelta
+
+from assignments.models import Assignment
+from notifications.models import Notification
+
+
 @login_required
 def dashboard(request):
 
@@ -45,7 +54,6 @@ def dashboard(request):
 
     # ===== WEEKLY CHART =====
     today = timezone.now().date()
-
     days_since_sunday = today.weekday() + 1
     sunday = today - timedelta(days=days_since_sunday % 7)
 
@@ -54,7 +62,6 @@ def dashboard(request):
     completed_data = []
 
     for i in range(7):
-
         day = sunday + timedelta(days=i)
         labels.append(day.strftime("%a"))
 
@@ -66,7 +73,17 @@ def dashboard(request):
             day_assignments.filter(completed=True).count()
         )
 
-    # ===== CONTEXT (MUST BE OUTSIDE LOOP) =====
+    # ===== NOTIFICATIONS =====
+    notifications = Notification.objects.filter(
+        user=request.user
+    ).order_by('-created_at')[:10]
+
+    unread_count = Notification.objects.filter(
+        user=request.user,
+        is_read=False
+    ).count()
+
+    # ===== CONTEXT =====
     context = {
         'total': total,
         'completed': completed,
@@ -78,10 +95,13 @@ def dashboard(request):
         'labels': labels,
         'total_data': total_data,
         'completed_data': completed_data,
+
+        # notifications
+        'notifications': notifications,
+        'unread_count': unread_count,
     }
 
     return render(request, 'dashboard/index.html', context)
-
 @login_required
 def profile_view(request):
     user = request.user

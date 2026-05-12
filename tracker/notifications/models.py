@@ -4,8 +4,9 @@ from django.contrib.auth.models import User
 
 class Notification(models.Model):
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="notifications")
 
+    title = models.CharField(max_length=200, default="New Notification")
     message = models.TextField()
 
     is_read = models.BooleanField(default=False)
@@ -13,4 +14,4 @@ class Notification(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Notification for {self.user.username}"
+        return self.title
