@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.db.models import Case, When, Value, IntegerField, Q
 from django.contrib import messages
+from django.contrib.admin.views.decorators import staff_member_required
 
 from .models import Assignment, Project
 from .forms import AssignmentForm, ProjectForm
